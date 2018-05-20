@@ -1,0 +1,76 @@
+Symbol,Date,Amount,Frequence,Type
+1117.HK,2015/6/10,0.01,Irreg,Final
+1336.HK,2018/7/11,0.52,Annual,Final
+1336.HK,2017/7/11,0.48,Annual,Final
+1336.HK,2016/7/11,0.252,Annual,Final
+1336.HK,2015/6/26,0.189,Annual,Final
+1336.HK,2014/5/22,0.135,Annual,Final
+1336.HK,2012/8/8,0.288504,None,Special Cash
+1336.HK,2012/6/27,0.081,Irreg,Final
+CLNS,2018/6/28,0.11,Quarter,Regular Cash
+CLNS,2018/3/28,0.11,Quarter,Regular Cash
+CLNS,2017/12/28,0.27,Quarter,Regular Cash
+CLNS,2017/9/28,0.27,Quarter,Regular Cash
+CLNS,2017/6/28,0.27,Quarter,Regular Cash
+CLNS,2017/3/29,0.24,Quarter,Pro Rata
+CLNS,2017/1/11,1.1635,None,Special Cash
+CLNS,2016/11/9,0.1,Quarter,Regular Cash
+CLNS,2016/8/11,0.1,Quarter,Regular Cash
+CLNS,2016/5/12,0.1,Quarter,Regular Cash
+CLNS,2016/3/3,0.1,Quarter,Regular Cash
+CLNS,2015/11/12,0.1,Quarter,Regular Cash
+CLNS,2015/8/13,0.1,Quarter,Regular Cash
+CLNS,2015/5/14,0.1,Quarter,Regular Cash
+CLNS,2015/3/5,0.1,Quarter,Regular Cash
+CLNS,2014/11/6,0.1,Quarter,Regular Cash
+COWN,2016/12/5,0.25,None,Stock Split
+NRF,2016/11/9,0.4,Quarter,Regular Cash
+NRF,2016/8/11,0.4,Quarter,Regular Cash
+NRF,2016/5/12,0.4,Quarter,Regular Cash
+NRF,2016/3/3,0.4,Quarter,Regular Cash
+NRF,2015/11/12,0.75,Quarter,Regular Cash
+NRF,2015/11/2,0.5,None,Stock Split
+NRF,2015/11/2,0.166667,None,Spinoff
+NRF,2015/8/13,0.8,Quarter,Regular Cash
+NRF,2015/5/14,0.8,Quarter,Regular Cash
+NRF,2015/3/5,0.8,Quarter,Regular Cash
+NRF,2014/11/6,0.8,Quarter,Regular Cash
+NRF,2014/8/14,1,Quarter,Regular Cash
+BCP.PL,2017/1/17,15,None,Rights Issue
+BCP.PL,2016/10/24,0.013333,None,Stock Split
+BCP.PL,2014/7/1,1.75,None,Rights Issue
+BCP.PL,2012/9/11,1.734385,None,Rights Issue
+BCP.PL,2011/5/24,0.111359,None,Rights Issue
+BCP.PL,2011/4/21,0.043991,None,Rights Issue
+BCP.PL,2010/4/21,0.085193,Semi-Anl,Final
+BCP.PL,2009/4/9,0.076225,Semi-Anl,Final
+BCP.PL,2008/4/7,0.29996,None,Rights Issue
+BCP.PL,2007/11/26,0.119432,Semi-Anl,Interim
+BCP.PL,2007/6/12,0.154938,Semi-Anl,Final
+BCP.PL,2006/11/9,0.119432,Semi-Anl,Interim
+BCP.PL,2006/4/3,0.119432,Semi-Anl,Final
+BCP.PL,2005/10/14,0.113178,Annual,Interim
+BCP.PL,2005/4/1,0.120037,Annual,Final
+BCP.PL,2004/11/3,0.102889,Annual,Interim
+BCP.PL,2004/4/6,0.181568,Annual,Regular Cash
+BCP.PL,2003/3/11,0.4,None,Rights Issue
+BCP.PL,2003/3/11,0.288204,Annual,Regular Cash
+BCP.PL,2002/12/4,0.1,None,Entitlement
+BCP.PL,2002/4/10,0.432305,Annual,Regular Cash
+BCP.PL,2001/4/9,0.027136,None,Bonus
+BCP.PL,2001/2/26,0.08,None,Rights Issue
+BCP.PL,2000/4/4,0.426551,Annual,Regular Cash
+002027.SZ,2017/7/6,0.291429,Irreg,Regular Cash
+002027.SZ,2017/7/6,0.4,None,Bonus
+002027.SZ,2016/6/30,0.089286,Irreg,Regular Cash
+002027.SZ,2016/6/30,1,None,Bonus
+002027.SZ,2006/4/11,0.35,None,Bonus
+002027.SZ,2005/11/9,0.3,None,Stock Reform-Entitlement
+002027.SZ,2005/5/11,1,None,Bonus
+002027.SZ,2005/5/11,0.026455,Annual,Regular Cash
+601336.SS,2017/8/10,0.48,Annual,Regular Cash
+601336.SS,2016/8/10,0.28,Annual,Regular Cash
+601336.SS,2015/8/20,0.21,Annual,Regular Cash
+601336.SS,2014/7/15,0.15,Annual,Regular Cash
+601336.SS,2012/8/16,0.32056,None,Special Cash
+601336.SS,2012/7/5,0.09,Irreg,Regular Cash

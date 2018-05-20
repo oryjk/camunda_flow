@@ -1,0 +1,16 @@
+package com.betalpha.fosun;
+
+import org.camunda.bpm.spring.boot.starter.annotation.EnableProcessApplication;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+
+@SpringBootApplication
+@EnableProcessApplication
+@ComponentScan("com.betalpha")
+public class BackendFosunApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(BackendFosunApplication.class, args);
+	}
+}
