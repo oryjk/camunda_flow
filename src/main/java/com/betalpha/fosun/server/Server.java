@@ -1,5 +1,6 @@
 package com.betalpha.fosun.server;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 import java.util.concurrent.Executors;
 
 /**
@@ -50,27 +52,31 @@ public class Server {
         }
     }
 
-    public String getBloombergRating(String isin) {
+    public List<String> getBloombergRating(String isin) {
+        List<String> inputLines = Lists.newArrayList();
         try {
             log.info("send isin:{}", isin);
             out.println(isin);
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
-                log.info("receive rating:{}", inputLine);
-                return inputLine;
+                if ("end".equals(inputLine)) {
+                    break;
+                }
+                inputLines.add(inputLine);
             }
+            log.info("receive rating:{}", inputLines);
         } catch (IOException e) {
             log.error("send isin error", e);
         }
-        return null;
+        return inputLines;
     }
 
     @PreDestroy
     public void disconnect() throws Exception {
         log.info("disconnect");
-        PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-        out.println("disconnect");
-        out.close();
+        PrintWriter printWriter = new PrintWriter(client.getOutputStream(), true);
+        printWriter.println("disconnect");
+        printWriter.close();
         client.close();
         serverSocket.close();
     }

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("com.betalpha")
 public class BackendFosunApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BackendFosunApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BackendFosunApplication.class, args);
+    }
 }

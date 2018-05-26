@@ -46,4 +46,8 @@ public class SplitService {
         }
         return split.getSplit();
     }
+
+    public static String getType(LocalDate tradingDate, String code) {
+        return splitMap.get(tradingDate).get(code).getType();
+    }
 }

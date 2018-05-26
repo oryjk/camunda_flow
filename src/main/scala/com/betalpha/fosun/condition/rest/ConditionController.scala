@@ -17,6 +17,7 @@ class ConditionController {
   @Autowired
   var conditionService: ConditionService = _
 
+
   @GetMapping(Array("/list"))
   def processList(): ResponseEntity[RestResponse] = {
     new ResponseEntity[RestResponse](new RestResponse(conditionService.getConditions()), HttpStatus.OK)

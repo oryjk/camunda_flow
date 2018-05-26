@@ -2,7 +2,7 @@ package com.betalpha.fosun.process.rest
 
 import com.betalpha.fosun.api.RestResponse
 import com.betalpha.fosun.api.process._
-import com.betalpha.fosun.service.ProcessService
+import com.betalpha.fosun.service.{AssetPoolService, ProcessService}
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.{HttpStatus, ResponseEntity}
@@ -17,6 +17,9 @@ class ProcessController {
 
   @Autowired
   var processService: ProcessService = _
+  @Autowired
+  var assetPoolService: AssetPoolService = _
+
 
   var logger: Logger = LoggerFactory.getLogger(this.getClass)
 
@@ -24,16 +27,21 @@ class ProcessController {
   @PostMapping(Array("/start"))
   def startProcess(@RequestBody startParameter: StartParameter): ResponseEntity[RestResponse] = {
     logger.info("start process {}", startParameter)
-    val instance = processService.startProcess(startParameter)
-    logger.info("new instance id {}", instance.getId)
-    new ResponseEntity[RestResponse](new RestResponse(new StartSuccess(instance.getId)), HttpStatus.CREATED)
+    val dataBaseIsIn = assetPoolService.checkExistIsIn(startParameter.getIsinId)
+    if (dataBaseIsIn.isPresent) {
+      new ResponseEntity[RestResponse](new RestResponse(startParameter.getIsinId + " 已入池"), HttpStatus.OK)
+    } else {
+      val instance = processService.startProcess(startParameter)
+      logger.info("new instance id {}", instance.getId)
+      new ResponseEntity[RestResponse](new RestResponse(new StartSuccess(instance.getId)), HttpStatus.CREATED)
+    }
   }
 
   @PostMapping(Array("/create"))
   def createProcess(@RequestBody processSource: ProcessSource): ResponseEntity[RestResponse] = {
     logger.info("create process {}", processSource)
     val deployment = processService.createProcess(processSource)
-    new ResponseEntity[RestResponse](new RestResponse(new CreateSuccess(deployment.getId, deployment.getName)), HttpStatus.CREATED)
+    new ResponseEntity[RestResponse](new RestResponse(processService.queryDeployment(deployment)), HttpStatus.CREATED)
   }
 
   @GetMapping(Array("/list"))

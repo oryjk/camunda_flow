@@ -29,16 +29,20 @@ public class SplitLoader extends AbstractLoader{
             Split split = new Split();
             split.setCode(map.get("Symbol"));
             split.setTradingDate(convertDate(map.get("Date")));
-            split.setSplit(calculateSplit(map.get("Amount")));
+            split.setType(map.get("Type"));
+            split.setSplit(calculateSplit(map.get("Amount"), split.getType()));
             return split;
         }).collect(Collectors.toList());
         log.info("finish processing ");
         return dividendList;
     }
 
-    private static Double calculateSplit(String split) {
+    private static Double calculateSplit(String split, String type) {
         if (StringUtils.isEmpty(split)) {
             return Double.NaN;
+        }
+        if ("Stock Split".equals(type)) {
+            return Double.valueOf(split);
         }
         return Double.valueOf(split) + 1;
     }

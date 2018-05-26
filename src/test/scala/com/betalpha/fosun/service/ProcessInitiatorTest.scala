@@ -3,7 +3,9 @@ package com.betalpha.fosun.service
 import java.util.UUID
 
 import com.betalpha.fosun.api.process.{ProcessSource, StartParameter}
+import com.betalpha.fosun.user.DepartmentService
 import org.camunda.bpm.engine._
+import org.mockito.Mockito.{mock, when}
 import org.slf4j.{Logger, LoggerFactory}
 import org.specs2.mutable.Specification
 import org.springframework.util.CollectionUtils
@@ -19,12 +21,17 @@ class ProcessInitiatorTest extends Specification {
   private val repositoryService: RepositoryService = engine.getRepositoryService
   private val runtimeService: RuntimeService = engine.getRuntimeService
   private val taskService: TaskService = engine.getTaskService
-  private val processService: ProcessService = new ProcessService(repositoryService, runtimeService, taskService)
+  private val identityService: IdentityService = engine.getIdentityService
+
+  val departmentService = mock(classOf[DepartmentService])
+  val ratingService = mock(classOf[RatingService])
+
+  private val processService: ProcessService = new ProcessService(repositoryService, runtimeService, taskService, identityService, departmentService, ratingService)
 
   private val source =
     """<?xml version="1.0" encoding="UTF-8"?>
       |<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1x8z08g" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.14.0">
-      |  <bpmn:process id="Process_1" name="复星决策流程" isExecutable="false">
+      |  <bpmn:process id="Process_1" name="复星决策流程" isExecutable="true">
       |    <bpmn:startEvent id="StartEvent_1" >
       |      <bpmn:outgoing>SequenceFlow_1kawblg</bpmn:outgoing>
       |    </bpmn:startEvent>
@@ -271,10 +278,14 @@ class ProcessInitiatorTest extends Specification {
 
     }
     "start process ok" in {
-      val instance = processService.startProcess(new StartParameter(definitions.get(0).getId, UUID.randomUUID().toString, "user1"))
+      when(departmentService.getUserDepartmentByUserName("uses1")).thenReturn("department")
+      when(ratingService.getSubmitter("1")).thenReturn("A")
+      when(ratingService.getRating("1")).thenReturn("A")
+      val instance = processService.startProcess(new StartParameter(definitions.get(0).getKey(), UUID.randomUUID().toString, "user1", "1"))
       instance should not be null
       instance.getId shouldNotEqual empty
     }
+
   }
 
 

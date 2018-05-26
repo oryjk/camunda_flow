@@ -64,9 +64,9 @@ public class UserService {
         Group group = identityService.newGroup(organizationStructureApi.getId());
         group.setName(organizationStructureApi.getName());
         identityService.saveGroup(group);
-        if (!StringUtils.isEmpty(organizationStructureApi.getVetoPowerUser())) {
-            String vetoUser = organizationStructureApi.getVetoPowerUser();
-            identityService.setUserInfo(vetoUser, "oneVetoPower", "true");
+        if (!StringUtils.isEmpty(organizationStructureApi.getVotePowerUser())) {
+            String votePowerUser = organizationStructureApi.getVotePowerUser();
+            identityService.setUserInfo(votePowerUser, "oneVotePower", "true");
         }
         List<FusonUser> userList = organizationStructureApi.getUserGroup();
         userList.forEach(user -> identityService.createMembership(user.getId(), group.getId()));

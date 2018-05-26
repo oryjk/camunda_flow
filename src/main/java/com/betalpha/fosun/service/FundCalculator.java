@@ -122,10 +122,26 @@ public class FundCalculator {
                 todayHolding.setDailyReturn((todayHolding.getMarketValue() + totalDividend + sellMarketValue) / (preHolding.getMarketValue() + buyMarketValue) - 1);
                 todayHolding.setNav(preHolding.getNav() * (1 + todayHolding.getDailyReturn()));
             } else {
-                todayHolding.setDailyReturn(0D);
-                todayHolding.setNav(1D);
+                double stockSellMarketValue = 0;
+                double stockBuyMarketValue = 0;
+                if (!stockRecordList.isEmpty()) {
+                    stockSellMarketValue = Math.abs(stockRecordList.stream().filter(stockTransactionRecord -> stockTransactionRecord.getAmount() < 0).mapToDouble(record -> record.getAmount() * record.getPrice() * ExchangeRateService.getExchangeRate(tradingDate, record.getCurrency())).sum());
+                    stockBuyMarketValue = stockRecordList.stream().filter(record -> record.getAmount() > 0).mapToDouble(record -> record.getAmount() * record.getPrice() * ExchangeRateService.getExchangeRate(tradingDate, record.getCurrency())).sum();
+                }
+                double bondSell = 0;
+                double bondBuy = 0;
+                if (!bondRecordList.isEmpty()) {
+                    bondSell = Math.abs(bondRecordList.stream().filter(record -> record.getAmount() < 0).mapToDouble(record -> getRealAmount(record.getCode(), record.getAmount()) * record.getPrice() * ExchangeRateService.getExchangeRate(tradingDate, record.getCurrency())).sum());
+                    bondBuy = bondRecordList.stream().filter(record -> record.getAmount() > 0).mapToDouble(record -> getRealAmount(record.getCode(), record.getAmount()) * record.getPrice() * ExchangeRateService.getExchangeRate(tradingDate, record.getCurrency())).sum();
+                }
+                double buyMarketValue = stockBuyMarketValue + bondBuy;
+                double sellMarketValue = stockSellMarketValue + bondSell;
+                todayHolding.setNav((todayHolding.getMarketValue() + sellMarketValue) / buyMarketValue);
+                todayHolding.setDailyReturn(todayHolding.getNav() - 1);
             }
-            holdingHistoryMap.put(tradingDate, todayHolding);
+            if (!todayHolding.getDailyReturn().isNaN()) {
+                holdingHistoryMap.put(tradingDate, todayHolding);
+            }
         });
 
         return Lists.newArrayList(holdingHistoryMap.values());
@@ -256,8 +272,11 @@ public class FundCalculator {
         FundHistory fundHistory = new FundHistory();
         fundHistory.setTradingDate(tradingDate);
         fundHistory.setMarketValue(totalMarketValue);
-        fundHistory.setNav(1D);
-        fundHistory.setDailyReturn(0D);
+
+        double stockBuyMarketValue = stockRecordList.stream().filter(record -> record.getAmount() > 0).mapToDouble(record -> record.getAmount() * record.getPrice() * ExchangeRateService.getExchangeRate(tradingDate, record.getCurrency())).sum();
+
+        fundHistory.setNav(fundHistory.getMarketValue() / stockBuyMarketValue);
+        fundHistory.setDailyReturn(fundHistory.getNav() - 1);
         fundHistory.setFundHoldingHistoryList(fundHoldingHistoryList);
         fundHistoryMap.put(tradingDate, fundHistory);
     }

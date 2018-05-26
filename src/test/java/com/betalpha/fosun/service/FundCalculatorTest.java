@@ -13,4 +13,9 @@ public class FundCalculatorTest {
     public void testGetFundHistoryList() {
         FundCalculator.getFundHistoryList();
     }
+
+    @Test
+    public void testGetByCode() {
+        FundCalculator.getByCode("NRF");
+    }
 }

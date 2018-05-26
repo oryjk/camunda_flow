@@ -46,4 +46,8 @@ public class DividendService {
         }
         return dividend.getDividend();
     }
+
+    public static String getType(LocalDate tradingDate, String code) {
+        return dividendMap.get(tradingDate).get(code).getType();
+    }
 }

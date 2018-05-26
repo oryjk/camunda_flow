@@ -15,11 +15,24 @@ public class StartParameter implements Serializable {
     private String processKey;
     private String isinId;
     private String userId;
+    private String isMock;
 
-    public StartParameter(String processKey, String isinId, String userId) {
+    public StartParameter(String processKey, String isinId, String userId, String isMock) {
         this.processKey = processKey;
         this.isinId = isinId;
         this.userId = userId;
+        this.isMock = isMock;
+    }
+
+    public String getIsMock() {
+        return isMock;
+    }
+
+    public void setIsMock(String isMock) {
+        this.isMock = isMock;
+    }
+
+    public StartParameter() {
     }
 
     public String getProcessKey() {

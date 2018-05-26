@@ -1,5 +1,6 @@
 package com.betalpha.fosun.user;
 
+import com.betalpha.fosun.api.NodeNameValueMapApi;
 import com.betalpha.fosun.api.OrganizationStructureApi;
 import com.betalpha.fosun.model.FusonUser;
 import com.betalpha.fosun.model.InvestmentCommittee;
@@ -53,6 +54,19 @@ public class OrganizationStructureService {
                 .collect(Collectors.toList());
     }
 
+    public OrganizationStructureApi getCommitteeByUserId(String userId) {
+        List<OrganizationStructureApi> organizationStructureApis = getOrganizationStructureApiList();
+        for (OrganizationStructureApi ogStructureApi : organizationStructureApis) {
+            for (FusonUser fusonUser : ogStructureApi.getUserGroup()) {
+                if (fusonUser.getId().equals(userId)) {
+                    return ogStructureApi;
+                }
+            }
+        }
+        log.error("user not in group userId:{}", userId);
+        return null;
+    }
+
 
     public List<FusonUser> getUsersById(String committeeId) {
 
@@ -65,13 +79,11 @@ public class OrganizationStructureService {
                 .collect(Collectors.toList());
     }
 
-    public List<String> getDealer() {
-
+    public List<NodeNameValueMapApi> getDealer() {
         return Lists.newArrayList(
-                CommitteeConstants.BOND_COMMITTEE,
-                CommitteeConstants.VOTE_COMMITTEE,
-                CommitteeConstants.INTERNAL_AUDIT
-
+                new NodeNameValueMapApi(CommitteeConstants.BOND_COMMITTEE_SHOW,CommitteeConstants.BOND_COMMITTEE),
+                new NodeNameValueMapApi(CommitteeConstants.VOTE_COMMITTEE_SHOW,CommitteeConstants.VOTE_COMMITTEE),
+                new NodeNameValueMapApi(CommitteeConstants.INTERNAL_AUDIT_SHOW,CommitteeConstants.INTERNAL_AUDIT)
         );
     }
 
@@ -81,5 +93,4 @@ public class OrganizationStructureService {
                 CommitteeConstants.COMPANY
         );
     }
-
 }

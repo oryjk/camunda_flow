@@ -15,4 +15,5 @@ public class Split {
     private String code;
     private LocalDate tradingDate;
     private Double split;
+    private String type;
 }

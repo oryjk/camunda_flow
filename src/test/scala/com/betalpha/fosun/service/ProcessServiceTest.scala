@@ -2,8 +2,12 @@ package com.betalpha.fosun.service
 
 import java.util.UUID
 
+import com.betalpha.fosun.FlowConstants.SUBMITTER
 import com.betalpha.fosun.api.process.{ProcessSource, StartParameter}
+import com.betalpha.fosun.user.DepartmentService
 import org.camunda.bpm.engine._
+import org.mockito.Mockito
+import org.mockito.Mockito.mock
 import org.slf4j.{Logger, LoggerFactory}
 import org.specs2.mutable.Specification
 import org.springframework.util.CollectionUtils
@@ -18,7 +22,11 @@ class ProcessServiceTest extends Specification {
   private val repositoryService: RepositoryService = engine.getRepositoryService
   private val runtimeService: RuntimeService = engine.getRuntimeService
   private val taskService: TaskService = engine.getTaskService
-  private val processService: ProcessService = new ProcessService(repositoryService, runtimeService, taskService)
+  private val identityService: IdentityService = engine.getIdentityService
+  val departmentService = Mockito.mock(classOf[DepartmentService])
+  val ratingService = mock(classOf[RatingService])
+
+  private val processService: ProcessService = new ProcessService(repositoryService, runtimeService, taskService, identityService, departmentService, ratingService)
 
   private val source =
     """<?xml version="1.0" encoding="UTF-8"?>
@@ -261,10 +269,11 @@ class ProcessServiceTest extends Specification {
 
 
   "ProcessService" should {
+    val userId = "user1"
     val deployment = processService.createProcess(new ProcessSource("Process_1", "复星流程demo", source))
     val definitions = processService.queryProcessDefinition()
     CollectionUtils.isEmpty(definitions) must be equalTo false
-    val instance = processService.startProcess(new StartParameter(definitions.get(0).getId, UUID.randomUUID().toString, "user1"))
+    val instance = processService.startProcess(new StartParameter(definitions.get(0).getKey, UUID.randomUUID().toString, userId, "1"))
     "create process ok" in {
       logger.info("deployment {}", deployment)
       deployment should not be null
@@ -279,8 +288,11 @@ class ProcessServiceTest extends Specification {
     "can query variable" in {
       instance should not be null
       instance.getId shouldNotEqual null
-      val value = processService.queryVariableByDefinitionId(instance.getId, "isinId")
-      value shouldNotEqual null
+      val isinId = processService.queryVariableByDefinitionId(instance.getId, "isIn")
+      isinId shouldNotEqual null
+      val user = processService.queryVariableByDefinitionId(instance.getId, SUBMITTER)
+      user shouldNotEqual null
+      user shouldEqual userId
     }
   }
 

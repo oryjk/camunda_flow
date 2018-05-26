@@ -15,4 +15,5 @@ public class Dividend {
     private String code;
     private Double dividend;
     private LocalDate tradingDate;
+    private String type;
 }

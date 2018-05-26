@@ -1,4 +1,4 @@
-package com.betalpha.fosun.settting.rest;
+package com.betalpha.fosun.setting.rest;
 
 import com.betalpha.fosun.api.Flow;
 import com.betalpha.fosun.api.RestResponse;
@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -32,15 +30,23 @@ public class FlowController {
     @RequestMapping(method = RequestMethod.GET)
     public RestResponse findFlowId() {
         return new RestResponse(repositoryService.createProcessDefinitionQuery().list()
-                .stream().map(processDefinition ->
+                .stream()
+                .filter(processDefinition -> processDefinition.getKey().equals(flowStore.getFlowId()))
+                .map(processDefinition ->
                         new Flow(processDefinition.getKey(), processDefinition.getName(), processDefinition.getKey().equals(flowStore.getFlowId()))
-                ).collect(Collectors.toList()));
+                ).findFirst().orElseGet(Flow::new));
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public synchronized RestResponse updateFlowId(@RequestBody String flowId) {
-        flowStore.setFlowId(flowId);
-        return new RestResponse(flowId);
+    public synchronized RestResponse updateFlowId(@RequestBody Flow pFlow) {
+        flowStore.setFlowId(pFlow.getId());
+        Flow flow = repositoryService.createProcessDefinitionQuery().list()
+                .stream().filter(processDefinition -> processDefinition.getKey().equals(pFlow.getId()))
+                .map(processDefinition ->
+                        new Flow(processDefinition.getKey(), processDefinition.getName(), processDefinition.getKey().equals(flowStore.getFlowId()))
+                ).findFirst().orElseThrow(IllegalStateException::new);
+
+        return new RestResponse(flow);
     }
 
 }

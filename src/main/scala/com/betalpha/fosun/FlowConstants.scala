@@ -5,12 +5,26 @@ package com.betalpha.fosun
   */
 object FlowConstants {
 
-  def ISIN: String = "isIn"
+  val ISIN: String = "isIn"
 
-  def IS_GRADE: String = "isGrade"
+  val IS_GRADE: String = "isGrade"
 
-  def SUBMISSION_DEPARTMENT: String = "submissionDepartment"
+  val SUBMISSION_DEPARTMENT: String = "submissionDepartment"
 
-  def SUBMITTER: String = "submitter"
+  val SUBMITTER: String = "submitter"
+
+  val IS_MOCK: String = "isMock"
+
+  val ISSUER: String = "issuer"
+
+  val CREATE_TIME: String = "createTime"
+
+  val TRUE_String: String = "1"
+
+  val FALSE_String: String = "0"
+
+  val High_Yield_Bond: String = "高收益债券"
+
+  val Hign_Rate_Bond: String = "高等级债券"
 
 }

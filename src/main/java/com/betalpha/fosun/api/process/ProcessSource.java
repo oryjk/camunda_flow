@@ -19,6 +19,9 @@ public class ProcessSource implements Serializable {
         this.source = source;
     }
 
+    public ProcessSource() {
+    }
+
     public String getName() {
         return name;
     }

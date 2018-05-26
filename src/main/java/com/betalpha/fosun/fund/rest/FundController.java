@@ -41,9 +41,9 @@ public class FundController {
         return ResponseEntity.ok(rating);
     }
 
-    @RequestMapping(value = "/stock", method = RequestMethod.POST)
-    public ResponseEntity getByCode(String code) {
-        log.info("start get rating:{}", code);
+    @RequestMapping(value = "/{code:.+}", method = RequestMethod.GET)
+    public ResponseEntity getByCode(@PathVariable("code") String code) {
+        log.info("start get by code:{}", code);
         List<FundHoldingHistory> byCode = FundCalculator.getByCode(code);
         return ResponseEntity.ok(byCode);
     }

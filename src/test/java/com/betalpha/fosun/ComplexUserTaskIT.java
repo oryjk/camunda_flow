@@ -2,6 +2,7 @@ package com.betalpha.fosun;
 
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.history.HistoricProcessInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;

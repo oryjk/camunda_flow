@@ -30,6 +30,7 @@ public class DividendLoader extends AbstractLoader{
             dividend.setCode(map.get("Symbol"));
             dividend.setTradingDate(convertDate(map.get("Date")));
             dividend.setDividend(convertToDouble(map.get("Amount")));
+            dividend.setType(map.get("Type"));
             return dividend;
         }).collect(Collectors.toList());
         list.addAll(stockDividendList);
